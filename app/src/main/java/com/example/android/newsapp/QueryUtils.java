@@ -23,6 +23,8 @@ import java.util.List;
 
 public final class QueryUtils {
     public static final String LOG_TAG = MainActivity.class.getName();
+    private static final int READ_TIMEOUT = 10000;
+    private static final int CONNECT_TIMEOUT = 15000;
 
     private static URL createUrl(String stringUrl){
         URL url = null;
@@ -56,8 +58,8 @@ public final class QueryUtils {
         try{
             urlConnection = (HttpURLConnection) url.openConnection();
             urlConnection.setRequestMethod("GET");
-            urlConnection.setReadTimeout(10000);
-            urlConnection.setConnectTimeout(15000);
+            urlConnection.setReadTimeout(READ_TIMEOUT);
+            urlConnection.setConnectTimeout(CONNECT_TIMEOUT);
             urlConnection.connect();
 
             if(urlConnection.getResponseCode() == 200){
@@ -99,15 +101,12 @@ public final class QueryUtils {
                 Article currArticle;
                 section = currJsonObject.getString("sectionName");
                 date = currJsonObject.getString("webPublicationDate");
+                JSONArray weirdArray = currJsonObject.optJSONArray("tags");
+                JSONObject weirdObject = weirdArray.getJSONObject(0);
+                author = weirdObject.getString("webTitle");
                 url = currJsonObject.getString("webUrl");
                 Log.e("QueryUtils", title+section+date);
-                if(currJsonObject.has("author")){
-                    author = currJsonObject.getString("author");
-                    currArticle = new Article(title, section,author, date, url);
-                } else{
-                    currArticle = new Article(title, section, date, url);
-                }
-
+                currArticle = new Article(title, section,author, date, url);
                 articles.add(currArticle);
             }
 

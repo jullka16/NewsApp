@@ -18,7 +18,7 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<List<Article>>{
     private static final int ARTICLES_LOADER_ID = 1;
-    private static final String ARTICLES_REQUEST_URL = "http://content.guardianapis.com/search?api-key=test";
+    private static final String ARTICLES_REQUEST_URL = "http://content.guardianapis.com/search?q=pokemon&api-key=test&show-tags=contributor";
     public static final String LOG_TAG = MainActivity.class.getName();
     ArticleAdapter adapter;
 
