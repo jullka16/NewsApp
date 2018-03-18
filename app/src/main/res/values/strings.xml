@@ -2,4 +2,11 @@
     <string name="app_name">NewsApp</string>
     <string name="no_internet">No internet connection</string>
     <string name="no_articles">No articles found</string>
+
+    <string name="settings_menu_item">Settings</string>
+    <string name="settings_title">Earthquake Settings</string>
+
+
+    <string name="settings_category_label">Category</string>
+    <string name="default_category">Games</string>
 </resources>

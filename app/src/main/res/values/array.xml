@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="Sections">
+        <item>Games</item>
+        <item>Opinion</item>
+        <item>Culture</item>
+        <item>Film</item>
+        <item>World news</item>
+    </string-array>
+
+</resources>

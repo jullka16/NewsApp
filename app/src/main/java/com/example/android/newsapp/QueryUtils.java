@@ -84,7 +84,7 @@ public final class QueryUtils {
     private static ArrayList<Article> extractArticles(String articleJson){
         ArrayList<Article> articles = new ArrayList<>();
         String title;
-        String author;
+        String author ="unknown";
         String section;
         String date;
         String url;
@@ -101,9 +101,15 @@ public final class QueryUtils {
                 Article currArticle;
                 section = currJsonObject.getString("sectionName");
                 date = currJsonObject.getString("webPublicationDate");
-                JSONArray weirdArray = currJsonObject.optJSONArray("tags");
-                JSONObject weirdObject = weirdArray.getJSONObject(0);
-                author = weirdObject.getString("webTitle");
+
+                if(currJsonObject.has("webTitle")){
+                    JSONArray weirdArray = currJsonObject.optJSONArray("tags");
+                    if(weirdArray.length()>0) {
+                        JSONObject weirdObject = weirdArray.getJSONObject(0);
+                        author = weirdObject.getString("webTitle");
+                    }
+                }
+
                 url = currJsonObject.getString("webUrl");
                 Log.e("QueryUtils", title+section+date);
                 currArticle = new Article(title, section,author, date, url);
