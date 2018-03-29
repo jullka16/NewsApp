@@ -22,7 +22,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<List<Article>>{
+public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<List<Article>>, SharedPreferences.OnSharedPreferenceChangeListener {
     private static final int ARTICLES_LOADER_ID = 1;
     private static final String ARTICLES_REQUEST_URL = "http://content.guardianapis.com/search?q=pokemon&api-key=test&show-tags=contributor";
     public static final String LOG_TAG = MainActivity.class.getName();
@@ -30,6 +30,9 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
     private TextView mEmptyStateTextView;
     private ProgressBar mProgressBar;
+
+    SharedPreferences prefs;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,12 +59,15 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
         }
 
+        prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        prefs.registerOnSharedPreferenceChangeListener(this);
+
+
     }
 
+
     @Override
-    // This method initialize the contents of the Activity's options menu.
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the Options Menu we specified in XML
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
     }
@@ -115,5 +121,10 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     public void onLoaderReset(Loader<List<Article>> loader) {
         Log.v(LOG_TAG,"EarthquakeActivity onLoadReset.");
         adapter.clear();
+    }
+
+    @Override
+    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String s) {
+        getLoaderManager().restartLoader(ARTICLES_LOADER_ID, null, this);
     }
 }
