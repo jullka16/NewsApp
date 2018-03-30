@@ -6,7 +6,6 @@ import android.preference.Preference;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 
 public class SettingsActivity extends AppCompatActivity {
     private static final int ARTICLES_LOADER_ID = 1;
@@ -31,7 +30,6 @@ public class SettingsActivity extends AppCompatActivity {
         public boolean onPreferenceChange(Preference preference, Object value) {
             String stringValue = value.toString();
             preference.setSummary(stringValue);
-            Log.v("tag", stringValue);
             return true;
         }
 

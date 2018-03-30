@@ -1,5 +1,6 @@
 package com.example.android.newsapp;
 
+import android.content.Context;
 import android.util.Log;
 
 import org.json.JSONArray;
@@ -50,7 +51,7 @@ public final class QueryUtils {
         return output.toString();
     }
 
-    private static String makeHttpRequest(URL url) throws IOException{
+    private static String makeHttpRequest(URL url, Context context) throws IOException{
         String jsonResponse = "";
         HttpURLConnection urlConnection = null;
         InputStream inputStream = null;
@@ -66,10 +67,10 @@ public final class QueryUtils {
                 inputStream = urlConnection.getInputStream();
                 jsonResponse = readFromStream(inputStream);
             } else{
-                Log.e(LOG_TAG, "Error response code: "+urlConnection.getResponseCode());
+                Log.e(LOG_TAG, context.getString(R.string.error) +urlConnection.getResponseCode());
             }
         } catch (IOException e){
-            Log.e(LOG_TAG, "Problem retriving the JSON results.", e);
+            Log.e(LOG_TAG, context.getString(R.string.problem_json), e);
         } finally {
             if(urlConnection != null){
                 urlConnection.disconnect();
@@ -81,37 +82,37 @@ public final class QueryUtils {
         return jsonResponse;
     }
 
-    private static ArrayList<Article> extractArticles(String articleJson){
+    private static ArrayList<Article> extractArticles(String articleJson, Context context){
         ArrayList<Article> articles = new ArrayList<>();
         String title;
-        String author ="unknown";
+        String author = context.getString(R.string.unknown);
         String section;
         String date;
         String url;
 
         try {
             JSONObject jsonRootObject = new JSONObject(articleJson);
-            JSONObject jsonObject = jsonRootObject.optJSONObject("response");
-            JSONArray jsonArray = jsonObject.optJSONArray("results");
+            JSONObject jsonObject = jsonRootObject.optJSONObject(context.getString(R.string.response));
+            JSONArray jsonArray = jsonObject.optJSONArray(context.getString(R.string.results));
 
             for(int i = 0; i<jsonArray.length(); i++){
                 JSONObject currJsonObject = jsonArray.getJSONObject(i);
-                title = currJsonObject.getString("webTitle");
+                title = currJsonObject.getString(context.getString(R.string.web_title));
                 String temp;
                 Article currArticle;
-                section = currJsonObject.getString("sectionName");
-                date = currJsonObject.getString("webPublicationDate");
+                section = currJsonObject.getString(context.getString(R.string.section_name));
+                date = currJsonObject.getString(context.getString(R.string.pub_date));
 
-                if(currJsonObject.has("webTitle")){
-                    JSONArray weirdArray = currJsonObject.optJSONArray("tags");
+                if(currJsonObject.has(context.getString(R.string.web_title))){
+                    JSONArray weirdArray = currJsonObject.optJSONArray(context.getString(R.string.tags));
                     if(weirdArray.length()>0) {
                         JSONObject weirdObject = weirdArray.getJSONObject(0);
-                        author = weirdObject.getString("webTitle");
+                        author = weirdObject.getString(context.getString(R.string.web_title));
                     }
                 }
 
-                url = currJsonObject.getString("webUrl");
-                Log.e("QueryUtils", title+section+date);
+                url = currJsonObject.getString(context.getString(R.string.web_url));
+                Log.e(context.getString(R.string.query_utils), title+section+date);
                 currArticle = new Article(title, section,author, date, url);
                 articles.add(currArticle);
             }
@@ -119,23 +120,23 @@ public final class QueryUtils {
 
 
         } catch (JSONException e){
-            Log.e("QueryUtils", "Problem parsing the earthquake JSON results", e);
+            Log.e(context.getString(R.string.query_utils), context.getString(R.string.problem_parsing), e);
         }
 
         return articles;
     }
 
-    public static List<Article> fetchArticleData (String requestUrl){
+    public static List<Article> fetchArticleData (String requestUrl, Context context){
         URL url = createUrl(requestUrl);
 
         String jsonResponse = null;
         try {
-            jsonResponse = makeHttpRequest(url);
+            jsonResponse = makeHttpRequest(url, context);
         } catch (IOException e){
-            Log.e(LOG_TAG, "Problem making the HTTP request.", e);
+            Log.e(LOG_TAG, context.getString(R.string.problem_request));
         }
 
-        List<Article> articles = extractArticles(jsonResponse);
+        List<Article> articles = extractArticles(jsonResponse, context);
         return  articles;
     }
 }

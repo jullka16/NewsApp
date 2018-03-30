@@ -31,39 +31,24 @@ public class Article {
         return mTitle;
     }
 
-    public void setmTitle(String mTitle) {
-        this.mTitle = mTitle;
-    }
 
     public String getmSection() {
         return mSection;
     }
 
-    public void setmSection(String mSection) {
-        this.mSection = mSection;
-    }
 
     public String getmAuthor() {
         return mAuthor;
     }
 
-    public void setmAuthor(String mAuthor) {
-        this.mAuthor = mAuthor;
-    }
 
     public String getmDate() {
         return mDate;
     }
 
-    public void setmDate(String mDate) {
-        this.mDate = mDate;
-    }
 
     public String getmUrl() {
         return mUrl;
     }
 
-    public void setmUrl(String mUrl) {
-        this.mUrl = mUrl;
-    }
 }

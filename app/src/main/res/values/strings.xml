@@ -9,4 +9,18 @@
 
     <string name="settings_category_label">Category</string>
     <string name="default_category">Games</string>
+    <string name="error">Error response code:</string>
+    <string name="problem_json">Problem retriving the JSON results.</string>
+    <string name="unknown">unknown</string>
+    <string name="response">response</string>
+    <string name="results">results</string>
+    <string name="web_title">webTitle</string>
+    <string name="section_name">sectionName</string>
+    <string name="pub_date">webPublicationDate</string>
+    <string name="tags">tags</string>
+    <string name="web_url">webUrl</string>
+    <string name="query_utils">QueryUtils</string>
+    <string name="problem_parsing">Problem parsing the earthquake JSON results</string>
+    <string name="problem_request">Problem making the HTTP request.</string>
+
 </resources>

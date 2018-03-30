@@ -11,7 +11,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -96,7 +95,6 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
 
         uriBuilder.appendQueryParameter("q", category);
-        Log.v("tag", "creating new request");
 
         return new ArticleLoader(this, uriBuilder.toString());
 
@@ -105,7 +103,6 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     @Override
     public void onLoadFinished(Loader<List<Article>> loader, List<Article> articles) {
 
-        Log.v(LOG_TAG,"EarthquakeActivity onLoadFinished.");
         mProgressBar.setVisibility(View.GONE);
         mEmptyStateTextView.setText(R.string.no_articles);
 
@@ -119,7 +116,6 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
     @Override
     public void onLoaderReset(Loader<List<Article>> loader) {
-        Log.v(LOG_TAG,"EarthquakeActivity onLoadReset.");
         adapter.clear();
     }
 
